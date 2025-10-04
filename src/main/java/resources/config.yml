@@ -1,0 +1,47 @@
+# Thank you for using WaterHomes!
+# Documentation:
+# Discord:
+# GitHub:
+
+# Teleport Delay
+# Bypass permission: waterhomes.tpdelay.bypass
+tp-delay:
+  enabled: true
+  cancel-on-move: true
+  duration: 2 # In seconds
+
+
+# Teleport Cooldown
+# Bypass permission: waterhomes.cooldown.bypass
+tp-cooldown:
+  enabled: true
+  duration: 60 # In seconds
+
+
+# Banned words for sethome
+# Regex pattern is allowed
+# Bypass permission: waterhomes.bannedwords.bypass
+banned-words:
+  - banned words is listed here
+  - th(i|1)s is (a|4) regex pattern
+
+
+# Here you can customize for home limits
+# Permission: waterhomes.sethome.<rank>
+# NOTE: This is not assigned in your permission manager automatically. Look at the example below.
+# For example, you set default to create only 1 home. You need to give a group/user the permission: waterhomes.sethome.default
+home-limits:
+  default: 1
+  god: 10
+
+
+# List unsafe blocks here so players cannot set home at this blocks
+# Use PaperMC API Material items (If you dont understand, you can Google :D)
+# Bypass permission: waterhomes.unsafeblocks.bypass
+# This detects within 2 block radius of player
+unsafe-blocks:
+  - WATER
+  - LAVA
+  - CACTUS
+  - MAGMA_BLOCK
+  - BEDROCK

@@ -3,7 +3,7 @@ description: A simple home plugin for your server!
 version: ${project.version}
 authors: [ WatermanMC, Runkang10 ]
 website: https://github.com/WatermanMC/WaterHomes
-main: com.github.WatermanMC.WaterHomes.Plugin
+main: com.github.WatermanMC.WaterHomes.WaterHomes
 api-version: "1.21"
 
 commands:
