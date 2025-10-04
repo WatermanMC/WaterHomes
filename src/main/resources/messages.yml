@@ -1,5 +1,4 @@
 # Customize messages here!
-prefix: "&b&lWaterHomes &f» &r"
 sethome:
   success: "&aSuccessfully set home at your location!"
   failed:
