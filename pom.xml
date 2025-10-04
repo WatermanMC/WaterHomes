@@ -5,7 +5,7 @@
 
     <groupId>com.github.WatermanMC</groupId>
     <artifactId>WaterHomds</artifactId>
-    <version>1.0.p</version>
+    <version>1.0.0-BETA</version>
     <packaging>jar</packaging>
 
     <name>WaterHomes</name>
