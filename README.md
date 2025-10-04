@@ -3,10 +3,12 @@
 **Author: WatermanMC**
 **Under "GNU General Public License v3.0" License**
 
+**NOTE: This plugin will only work on PaperMC (and its forks too) 1.21+**
+
 ## Links:
 **[Discord]()**
 **[GitHub](https://github.com/WatermanMC/WaterHomes)**
-**[Documentation]()**
+**[Documentation](https://github.com/WatermanMC/WaterHomes/wiki)**
 
 
 ### This plugin is owned by VOXELWARE STUDIOS
