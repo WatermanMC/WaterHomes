@@ -3,8 +3,6 @@
 **Author: WatermanMC**
 **Under "GNU General Public License v3.0" License**
 
-**NOTE: This needs Java 17 and later and PaperMC 1.21+**
-
 **NOTE: This plugin will only work on PaperMC (and its forks too) 1.21+**
 
 ## Links:
