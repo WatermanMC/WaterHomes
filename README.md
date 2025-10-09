@@ -21,7 +21,7 @@
 **(<> is optional, [] is required):**
 
 | Command | Description | Permission |
-| :--- | :--- | :--- | :--- |
+| :--- | :--- | :--- |
 | `/sethome <name>` | Sets a new home at your current location. | `waterhomes.sethome` |
 | `/home <name>` | Teleports you to your chosen home. | `waterhomes.home` |
 | `/homelist` | Lists all homes you have set. | `waterhomes.homelist` |
