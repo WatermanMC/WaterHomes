@@ -1,4 +1,4 @@
-# WaterHomes: Simple, Fast, and Reliable Home Plugin
+# WaterHomes
 
 **WaterHomes** is a lightweight and efficient home-setting plugin designed for **PaperMC 1.21+** servers. It provides players with the fundamental ability to set personal teleport locations, making world navigation quick and easy without the unnecessary clutter or overhead of larger plugins.
 
