@@ -24,6 +24,7 @@
 | :--- | :--- | :--- |
 | `/sethome <name>` | Sets a new home at your current location. | `waterhomes.sethome` |
 | `/home <name>` | Teleports you to your chosen home. | `waterhomes.home` |
+| `/delhome` | Delet your home | `waterhomes.delhome` |
 | `/homelist` | Lists all homes you have set. | `waterhomes.homelist` |
 | `/waterhomes [info/reload]` | Reload or see the info of the plugin. | `waterhomes.admin` |
 
