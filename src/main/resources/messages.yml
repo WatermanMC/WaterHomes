@@ -1,4 +1,6 @@
 # Customize messages here!
+prefix: "&b&lWaterHomes &r&l>> &r&7"
+
 sethome:
   success: "&aSuccessfully set home at your location!"
   failed:
@@ -16,6 +18,13 @@ home:
     delaymoved: "&cYou moved! Home teleportation cancelled."
     invalidhome: "&cError! Invalid home."
     args: "&cError! Invalid Argument!"
+
+delhome:
+  success: "&aHome '&e%home%&a' has been deleted!"
+  failed:
+    nohomes: "&cYou don't have any homes to delete!"
+    notfound: "&cHome '&e%home%&c' not found!"
+    noname: "&cPlease specify a home name to delete!"
 
 homelist:
   - "&7&l----- &6&lHome List &7&l-----"
