@@ -8,17 +8,17 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.Map;
 
 public class SetHomeCommand implements CommandExecutor {
-    
+
     private final WaterHomes plugin;
     private final HomeManager homeManager;
     private final ConfigManager configManager;
-    
+
     public SetHomeCommand(WaterHomes plugin) {
         this.plugin = plugin;
         this.homeManager = plugin.getHomeManager();
         this.configManager = plugin.getConfigManager();
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -27,15 +27,15 @@ public class SetHomeCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        
+
         if (!player.hasPermission("waterhomes.sethome")) {
             String message = configManager.getMessages().getString("prefix") + "&cYou don't have permission to set homes!";
             player.sendMessage(configManager.colorize(message));
             return true;
         }
 
-        boolean canSetNamedHomes = player.hasPermission("waterhomes.sethome.unlimited") || 
-                                  homeManager.getHomeLimit(player) > 1;
+        boolean canSetNamedHomes = player.hasPermission("waterhomes.sethome.unlimited") ||
+                homeManager.getHomeLimit(player) > 1;
 
         String homeName = "home";
         if (args.length > 0) {
@@ -58,7 +58,7 @@ public class SetHomeCommand implements CommandExecutor {
 
         int homeLimit = homeManager.getHomeLimit(player);
         Map<String, org.bukkit.Location> playerHomes = homeManager.getPlayerHomes(player.getUniqueId());
-        
+
         if (homeLimit > 0 && playerHomes.size() >= homeLimit && !playerHomes.containsKey(homeName)) {
             player.sendMessage(configManager.colorize(configManager.getMessages().getString("prefix") + "&cYou've reached your home limit!"));
             return true;
@@ -66,7 +66,7 @@ public class SetHomeCommand implements CommandExecutor {
 
         playerHomes.put(homeName, player.getLocation());
         homeManager.savePlayerHomes(player.getUniqueId(), playerHomes);
-        
+
         player.sendMessage(configManager.colorize(configManager.getMessages().getString("sethome.success")));
         return true;
     }

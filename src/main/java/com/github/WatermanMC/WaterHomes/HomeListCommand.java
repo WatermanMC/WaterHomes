@@ -8,17 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeListCommand implements CommandExecutor {
-    
+
     private final WaterHomes plugin;
     private final HomeManager homeManager;
     private final ConfigManager configManager;
-    
+
     public HomeListCommand(WaterHomes plugin) {
         this.plugin = plugin;
         this.homeManager = plugin.getHomeManager();
         this.configManager = plugin.getConfigManager();
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -27,7 +27,7 @@ public class HomeListCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        
+
         if (!player.hasPermission("waterhomes.homelist")) {
             String message = configManager.getMessages().getString("prefix") + "&cYou don't have permission to view home list!";
             player.sendMessage(configManager.colorize(message));
@@ -35,7 +35,7 @@ public class HomeListCommand implements CommandExecutor {
         }
 
         Map<String, org.bukkit.Location> playerHomes = homeManager.getPlayerHomes(player.getUniqueId());
-        
+
         List<String> homelistMessages = configManager.getMessages().getStringList("homelist");
         for (String message : homelistMessages) {
             if (message.contains("%home%")) {
@@ -46,7 +46,7 @@ public class HomeListCommand implements CommandExecutor {
                 player.sendMessage(configManager.colorize(message));
             }
         }
-        
+
         return true;
     }
 }
