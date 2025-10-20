@@ -1,6 +1,6 @@
 name: WaterHomes
 description: A simple home plugin for your server!
-version: "1.2.0"
+version: "1.2.1"
 authors: [ WatermanMC, Runkang10 ]
 website: https://github.com/WatermanMC/WaterHomes
 main: com.github.WatermanMC.WaterHomes.WaterHomes
@@ -63,3 +63,4 @@ permissions:
     description: Delete your home
 
     default: true
+
