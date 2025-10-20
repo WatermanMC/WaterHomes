@@ -61,4 +61,5 @@ permissions:
     default: op
   waterhomes.delhome:
     description: Delete your home
+
     default: true
