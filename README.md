@@ -8,6 +8,7 @@
 
 * **Essential Home Functionality:** Quickly set your personal spawn location anywhere in the world. No complex features—just simple, reliable `/home` functionality.
 * **Minimal Overhead:** Built to be lightweight and efficient, ensuring minimal impact on your server's performance. Perfect for small to medium-sized survival, semi-vanilla, or even large public servers that just need a core home feature.
+* **Extra Features:** Extra features like to ban a word if a player is setting a home or unsafe blocks so players cannot set a home near a blacklisted block! View it at your `config.yml`!
 * **Intuitive Commands:** Everything a player needs is covered by a small, easy-to-remember command set (<> is optional, [] is required):
     * `/sethome <name>`: Create a new home at your current location.
     * `/home <name>`: Teleport back to a set home.
