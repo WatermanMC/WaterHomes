@@ -1,57 +1,64 @@
 name: WaterHomes
-description: A simple home plugin for your server!
-version: ${project.version}
-authors: [ WatermanMC, Runkang10 ]
+description: "A simple home plugin for your server!"
+version: "2.0.0"
+authors: [ WatermanMC ]
 website: https://github.com/WatermanMC/WaterHomes
 main: com.github.WatermanMC.WaterHomes.WaterHomes
 api-version: "1.21"
 
 commands:
   home:
-    description: Teleport to your home
-    usage: /home <home>
+    description: "Teleport to your home"
+    usage: "/home <home>"
     permission: waterhomes.home
   sethome:
-    description: Set a home
-    usage: /sethome <name>
+    description: "Set a home"
+    usage: "/sethome <name>"
     permission: waterhomes.sethome
   homelist:
-    description: See the list of your homes
+    description: "See the list of your homes"
     usage: /homelist
     permission: waterhomes.homelist
   waterhomes:
-    description: Reload and see the information of the plugin
-    usage: /waterhomes <reload|info>
+    description: "Reload and see the information of the plugin"
+    usage: "/waterhomes <reload|info>"
     permission: waterhomes.admin
+  delhome:
+    description: "Delete your home"
+    usage: "/delhome <name>"
+    permission: waterhomes.delhome
 
 permissions:
   waterhomes.home:
-    description: Teleport to your home
+    description: "Teleport to your home"
     default: true
   waterhomes.sethome:
-    description: Set a home
+    description: "Set a home"
     default: true
-  waterhomes.sethome.<rank>:
-    description: Set a multiple homes but limited
+  waterhomes.sethome.<group>:
+    description: "Set a multiple homes but limited"
     default: false
   waterhomes.sethome.unlimited:
-    description: Set a unlimited homes
+    description: "Set a unlimited homes"
     default: false
   waterhomes.homelist:
-    description: See the list of your homes
+    description: "See the list of your homes"
     default: false
   waterhomes.bannedwords.bypass:
-    description: Bypass banned words
+    description: "Bypass banned words"
     default: op
   waterhomes.unsafeblocks.bypass:
-    description: Bypass unsafe blocks
+    description: "Bypass unsafe blocks"
     default: op
   waterhomes.tpdelay.bypass:
-    description: Bypass Teleport delay
+    description: "Bypass Teleport delay"
     default: op
   waterhomes.cooldown.bypass:
-    description: Bypass Teleport cooldown
+    description: "Bypass Teleport cooldown"
     default: op
   waterhomes.admin:
-    decription: Reload and see the information of the plugin
+    decription: "Reload and see the information of the plugin"
     default: op
+  waterhomes.delhome:
+    description: "Delete your home"
+    default: true

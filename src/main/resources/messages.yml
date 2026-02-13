@@ -1,24 +1,39 @@
 # Customize messages here!
+# Only supports MiniMessage!
+# MniMessage formatter: https://webui.advntr.dev/
+
+prefix: "<aqua><b>WaterHomes<white>: <reset>"
+
+reloaded: "<aqua><b>WaterHomes <reset><gray>Reloaded!"
+nopermission: "<red>You don't have permission to use this command!"
+
 sethome:
-  success: "&aSuccessfully set home at your location!"
+  success: "<green>Successfully set home at your location!"
   failed:
-    unsafe: "&cError! Unsafe location!"
-    banword: "&cError! Your set home contains a banned word!"
-    args: "&cError! Invalid Argument!"
+    unsafe: "<red>Error! Unsafe location!"
+    banword: "<red>Error! Your set home contains a banned word!"
+    args: "<red>Error! Invalid Argument!"
     # This is only activated if a player have a permission that grants him a multiple homes
-    noname: "&cError! No name specified!"
+    noname: "<red>Error! No name specified!"
+    reachedmaximum: "<red>You reached your limit for setting homes!"
 
 home:
-  success: "&aTeleported to your home!"
-  delay: "&aTeleporting.. Please wait."
-  cooldown: "&cYou are in cooldown! Please wait in &e%seconds% &cseconds!"
+  success: "<green>Teleported to your home!"
+  delay: "<green>Teleporting... Please wait."
+  cooldown: "<red>You are in cooldown! Please wait in <yellow>%seconds% <red>seconds!"
   failed:
-    delaymoved: "&cYou moved! Home teleportation cancelled."
-    invalidhome: "&cError! Invalid home."
-    args: "&cError! Invalid Argument!"
+    delaymoved: "<red>You moved! Home teleportation cancelled."
+    invalidhome: "<red>Error! Invalid home."
+    args: "<red>Error! Invalid Argument!"
 
-homelist:
-  - "&7&l----- &6&lHome List &7&l-----"
-    # This thing repeats, if you have many homes
-    # If a player dont have a permission that gives many homes, the home name is "HOME"
-  - "&e%home%"
+delhome:
+  success: "<green>Home '<yellow>%home%<green>' has been deleted!"
+  failed:
+    fail: "<red>Failed to delete %home%."
+    nohomes: "<red>You don't have any homes to delete!"
+    notfound: "<red>Home '<yellow>%home%<red>' not found!"
+    noname: "<red>Please specify a home name to delete!"
+
+# This will show example:
+# home1, home2, home3 and so on
+homelist: "<yellow>Your homes<gray>: <reset>%homes%"
