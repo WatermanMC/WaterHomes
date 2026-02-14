@@ -66,24 +66,23 @@ banned-words:
 
 
 # Here you can customize for home limits
-# Permission: waterhomes.sethome.<rank>
-# NOTE: This is not assigned in your permission manager automatically. Look at the example below.
-# For example, you set default to create only 1 home. You need to give a group/user the permission: waterhomes.sethome.default
-home-limits:
+# Permission: waterhomes.sethome.<group>
+# For example, you set 'default' to create only 1 home. You need to give a group/user the permission: waterhomes.sethome.default
+home-group-limits:
   default: 1
   god: 10
 
-
 # List unsafe blocks here so players cannot set home at this blocks
-# Use PaperMC API Material items (If you dont understand, you can Google :D)
+# Use Minecraft block identifier here, not numerical! You may try googling if you dont know :D
 # Bypass permission: waterhomes.unsafeblocks.bypass
 # This detects within 2 block radius of player
+# Case insensitive
 unsafe-blocks:
-  - WATER
-  - LAVA
-  - CACTUS
-  - MAGMA_BLOCK
-  - BEDROCK
+  - water
+  - lava
+  - cactus
+  - magma_block
+  - bedrock
 ```
 </details>
 
@@ -94,7 +93,7 @@ unsafe-blocks:
 ```yaml
 # Customize messages here!
 # Only supports MiniMessage!
-# MniMessage formatter:
+# MniMessage formatter: https://webui.advntr.dev/
 
 prefix: "<aqua><b>WaterHomes<white>: <reset>"
 
@@ -109,6 +108,7 @@ sethome:
     args: "<red>Error! Invalid Argument!"
     # This is only activated if a player have a permission that grants him a multiple homes
     noname: "<red>Error! No name specified!"
+    reachedmaximum: "<red>You reached your limit for setting homes!"
 
 home:
   success: "<green>Teleported to your home!"
@@ -127,11 +127,9 @@ delhome:
     notfound: "<red>Home '<yellow>%home%<red>' not found!"
     noname: "<red>Please specify a home name to delete!"
 
-homelist:
-  - "<gray><b>----- <gold>Home List <gray>-----"
-    # This thing repeats, if you have many homes
-    # If a player don't have a permission that gives many homes, the home name is "HOME"
-  - "<yellow>%home%"
+# This will show example:
+# home1, home2, home3 and so on
+homelist: "<yellow>Your homes<gray>: <reset>%homes%"
   ```
 </details>
 
