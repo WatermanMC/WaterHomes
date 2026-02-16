@@ -18,13 +18,15 @@ import java.util.logging.Level;
 public class HomeManager {
 
     private final WaterHomes plugin;
+    private final ConfigManager configManager;
     private File homesFile;
     private YamlConfiguration homesConfig;
     private final Map<UUID, Long> cooldowns = new ConcurrentHashMap<>();
     private final Map<UUID, Integer> pendingTeleports = new ConcurrentHashMap<>();
 
-    public HomeManager(WaterHomes plugin) {
+    public HomeManager(WaterHomes plugin, ConfigManager configManager) {
         this.plugin = plugin;
+        this.configManager = configManager;
         setupHomesFile();
     }
 
@@ -99,15 +101,15 @@ public class HomeManager {
         }
 
         String path = "home-group-limits";
-        if (config.getConfigurationSection(path) != null) {
-            for (String group : config.getConfigurationSection(path).getKeys(false)) {
+        if (configManager.getConfig().getConfigurationSection(path) != null) {
+            for (String group : configManager.getConfig().getConfigurationSection(path).getKeys(false)) {
                 if (player.hasPermission("waterhomes.sethome." + group)) {
-                    return config.getInt(path + "." + group);
+                    return configManager.getConfig().getInt(path + "." + group);
                 }
             }
         }
 
-        return config.getInt(path + ".default", 1);
+        return configManager.getConfig().getInt(path + ".default", 1);
     }
 
     public boolean isLocationUnsafe(@NotNull Location location, @NotNull Player player) {
@@ -116,7 +118,7 @@ public class HomeManager {
         }
 
         FileConfiguration config = plugin.getConfig();
-        List<String> unsafeBlocks = config.getStringList("unsafe-blocks");
+        List<String> unsafeBlocks = configManager.getConfig().getStringList("unsafe-blocks");
         int radius = 2;
 
         for (int x = -radius; x <= radius; x++) {
@@ -141,7 +143,7 @@ public class HomeManager {
         }
 
         FileConfiguration config = plugin.getConfig();
-        List<String> bannedWords = config.getStringList("banned-words");
+        List<String> bannedWords = configManager.getConfig().getStringList("banned-words");
         String lowerHomeName = homeName.toLowerCase();
 
         for (String bannedWord : bannedWords) {

@@ -50,11 +50,11 @@ public class HomeCommand implements CommandExecutor {
         }
 
         FileConfiguration config =  plugin.getConfig();
-        if (!player.hasPermission("waterhomes.cooldown.bypass") && config.getBoolean("tp-cooldown.enabled")) {
+        if (!player.hasPermission("waterhomes.cooldown.bypass") && configManager.getConfig().getBoolean("tp-cooldown.enabled")) {
             Map<UUID, Long> cooldowns = homeManager.getCooldowns();
             long cooldownTime = cooldowns.getOrDefault(player.getUniqueId(), 0L);
             long currentTime = System.currentTimeMillis();
-            long cooldownDuration = config.getLong("tp-cooldown.duration") * 1000;
+            long cooldownDuration = configManager.getConfig().getLong("tp-cooldown.duration") * 1000;
 
             if (currentTime - cooldownTime < cooldownDuration) {
                 long remaining = (cooldownDuration - (currentTime - cooldownTime)) / 1000;
@@ -81,8 +81,8 @@ public class HomeCommand implements CommandExecutor {
             return true;
         }
 
-        if (!player.hasPermission("waterhomes.tpdelay.bypass") && config.getBoolean("tp-delay.enabled")) {
-            int delay = config.getInt("tp-delay.duration");
+        if (!player.hasPermission("waterhomes.tpdelay.bypass") && configManager.getConfig().getBoolean("tp-delay.enabled")) {
+            int delay = configManager.getConfig().getInt("tp-delay.duration");
             String msg = configManager.getMessage("prefix") + configManager.getMessage("home.delay");
             player.sendMessage(minimessage.deserialize(msg));
             player.sendMessage(minimessage.deserialize(configManager.getMessage("home.delay")));
@@ -93,7 +93,7 @@ public class HomeCommand implements CommandExecutor {
                 String msg2 = configManager.getMessage("prefix") + configManager.getMessage("home.success");
                 player.sendMessage(minimessage.deserialize(msg2));
 
-                if (!player.hasPermission("waterhomes.cooldown.bypass") && config.getBoolean("tp-cooldown.enabled")) {
+                if (!player.hasPermission("waterhomes.cooldown.bypass") && configManager.getConfig().getBoolean("tp-cooldown.enabled")) {
                     homeManager.getCooldowns().put(player.getUniqueId(), System.currentTimeMillis());
                 }
             }, delay * 20L).getTaskId();
@@ -104,7 +104,7 @@ public class HomeCommand implements CommandExecutor {
             String msg = configManager.getMessage("prefix") + configManager.getMessage("home.success");
             player.sendMessage(minimessage.deserialize(msg));
 
-            if (!player.hasPermission("waterhomes.cooldown.bypass") && config.getBoolean("tp-cooldown.enabled")) {
+            if (!player.hasPermission("waterhomes.cooldown.bypass") && configManager.getConfig().getBoolean("tp-cooldown.enabled")) {
                 homeManager.getCooldowns().put(player.getUniqueId(), System.currentTimeMillis());
             }
         }

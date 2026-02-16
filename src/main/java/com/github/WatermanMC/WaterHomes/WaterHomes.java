@@ -13,7 +13,7 @@ public class WaterHomes extends JavaPlugin {
     @Override
     public void onEnable() {
         this.configManager = new ConfigManager(this);
-        this.homeManager = new HomeManager(this);
+        this.homeManager = new HomeManager(this, configManager);
         configManager.loadConfigs();
         registerCommands();
         registerCommandCompleter();

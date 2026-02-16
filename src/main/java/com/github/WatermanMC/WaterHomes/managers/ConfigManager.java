@@ -61,8 +61,6 @@ public class ConfigManager {
         String currentFile = "config.yml";
 
         try {
-            currentFile = "config.yml";
-            config = new YamlConfiguration();
             config.load(configFile);
 
             currentFile = "messages.yml";
@@ -116,5 +114,9 @@ public class ConfigManager {
 
     public List<String> getMessageList(@NotNull String path) {
         return messages.getStringList(path);
+    }
+
+    public FileConfiguration getConfig() {
+        return this.config;
     }
 }
