@@ -61,6 +61,8 @@ public class ConfigManager {
         String currentFile = "config.yml";
 
         try {
+            currentFile = "config.yml";
+            config = new YamlConfiguration();
             config.load(configFile);
 
             currentFile = "messages.yml";

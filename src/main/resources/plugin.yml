@@ -1,6 +1,6 @@
 name: WaterHomes
 description: "A simple home plugin for your server!"
-version: "2.1.0"
+version: "2.1.1"
 authors: [ WatermanMC ]
 website: https://github.com/WatermanMC/WaterHomes
 main: com.github.WatermanMC.WaterHomes.WaterHomes
