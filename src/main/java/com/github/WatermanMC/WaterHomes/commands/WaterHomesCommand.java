@@ -48,6 +48,7 @@ public class WaterHomesCommand implements CommandExecutor {
                 } else {
                     sender.sendMessage(minimessage.deserialize("<red>Plugin reload failed. Please check your console for errors."));
                 }
+                return true;
             }
             case "info" -> {
                 sender.sendMessage(minimessage.deserialize("<aqua><b>WaterHomes"));
@@ -55,9 +56,12 @@ public class WaterHomesCommand implements CommandExecutor {
                 sender.sendMessage(minimessage.deserialize("<gray>Version: <white>v" + plugin.getPluginMeta().getVersion()));
                 sender.sendMessage(minimessage.deserialize("<gray>Author: <white>" + plugin.getPluginMeta().getAuthors()));
                 sender.sendMessage(minimessage.deserialize("<gray>Commands: <gold>/waterhomes /sethome /home /homelist /delhome"));
+                return true;
             }
-            default -> sender.sendMessage(minimessage.deserialize(configManager.getMessage("prefix") + "<red>Usage: /waterhomes <reload|info>"));
+            default -> {
+                sender.sendMessage(minimessage.deserialize(configManager.getMessage("prefix") + "<red>Usage: /waterhomes <reload|info>"));
+                return true;
+            }
         }
-        return true;
     }
 }
