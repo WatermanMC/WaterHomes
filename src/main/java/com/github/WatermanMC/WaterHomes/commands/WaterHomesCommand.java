@@ -33,7 +33,7 @@ public class WaterHomesCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length == 0) {
+        if (args.length < 1) {
             sender.sendMessage(minimessage.deserialize(configManager.getMessage("prefix") + "<red>Usage: /waterhomes <reload|info>"));
             return true;
         }
