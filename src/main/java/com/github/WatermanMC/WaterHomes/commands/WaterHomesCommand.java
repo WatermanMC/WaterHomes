@@ -34,7 +34,8 @@ public class WaterHomesCommand implements CommandExecutor {
         }
 
         if (args.length < 1) {
-            sender.sendMessage(minimessage.deserialize(configManager.getMessage("prefix") + "<red>Usage: /waterhomes <reload|info>"));
+            String msg =  configManager.getMessage("prefix") + "<red>Usage: /waterhomes <info/reload>";
+            sender.sendMessage(minimessage.deserialize(msg));
             return true;
         }
 
@@ -51,15 +52,15 @@ public class WaterHomesCommand implements CommandExecutor {
                 return true;
             }
             case "info" -> {
-                sender.sendMessage(minimessage.deserialize("<aqua><b>WaterHomes"));
+                sender.sendMessage(minimessage.deserialize("<aqua><b>WaterHomes <reset><white>v" + plugin.getPluginMeta().getVersion()));
                 sender.sendMessage(minimessage.deserialize("<gray>A simple home plugin for your server!"));
-                sender.sendMessage(minimessage.deserialize("<gray>Version: <white>v" + plugin.getPluginMeta().getVersion()));
                 sender.sendMessage(minimessage.deserialize("<gray>Author: <white>" + plugin.getPluginMeta().getAuthors()));
                 sender.sendMessage(minimessage.deserialize("<gray>Commands: <gold>/waterhomes /sethome /home /homelist /delhome"));
                 return true;
             }
             default -> {
-                sender.sendMessage(minimessage.deserialize(configManager.getMessage("prefix") + "<red>Usage: /waterhomes <reload|info>"));
+                String msg =  configManager.getMessage("prefix") + "<red>Usage: /waterhomes <info/reload>";
+                sender.sendMessage(minimessage.deserialize(msg));
                 return true;
             }
         }
