@@ -12,9 +12,7 @@ public class WaterHomes extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.configManager = new ConfigManager(this);
-        this.homeManager = new HomeManager(this, configManager);
-        configManager.loadConfigs();
+        loadManagers();
         registerCommands();
         registerCommandCompleter();
         getLogger().info("WaterHomes v" + getPluginMeta().getVersion() + " enabled.");
@@ -25,7 +23,13 @@ public class WaterHomes extends JavaPlugin {
         getLogger().info("WaterHomes v" + getPluginMeta().getVersion() + " disabled.");
     }
 
-    public void registerCommands() {
+    private void loadManagers() {
+        this.configManager = new ConfigManager(this);
+        this.homeManager = new HomeManager(this, configManager);
+        configManager.loadConfigs();
+    }
+
+    private void registerCommands() {
         new DelHomeCommand(this, homeManager, configManager);
         new HomeCommand(this, homeManager, configManager);
         new HomeListCommand(this, homeManager, configManager);
