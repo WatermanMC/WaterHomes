@@ -49,7 +49,7 @@ public class HomeCommand implements CommandExecutor {
             return true;
         }
 
-        FileConfiguration config =  plugin.getConfig();
+        FileConfiguration config =  configManager.getConfig();
         if (!player.hasPermission("waterhomes.cooldown.bypass") && configManager.getConfig().getBoolean("tp-cooldown.enabled")) {
             Map<UUID, Long> cooldowns = homeManager.getCooldowns();
             long cooldownTime = cooldowns.getOrDefault(player.getUniqueId(), 0L);
