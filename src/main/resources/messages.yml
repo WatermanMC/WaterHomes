@@ -25,6 +25,7 @@ home:
     delaymoved: "<red>You moved! Home teleportation cancelled."
     invalidhome: "<red>Error! Invalid home."
     args: "<red>Error! Invalid Argument!"
+    nohomes: "<red>Error! You don't have any homes!"
 
 delhome:
   success: "<green>Home '<yellow>%home%<green>' has been deleted!"

@@ -60,11 +60,16 @@ public class HomeManager {
 
     public Map<String, Location> getPlayerHomes(@NotNull UUID playerId) {
         Map<String, Location> homes = new HashMap<>();
+        org.bukkit.configuration.ConfigurationSection section = homesConfig.getConfigurationSection(playerId.toString());
 
-        if (homesConfig.contains(playerId.toString())) {
-            Map<String, Object> serializedHomes = (Map<String, Object>) homesConfig.get(playerId.toString());
-            for (Map.Entry<String, Object> entry : serializedHomes.entrySet()) {
-                homes.put(entry.getKey(), Location.deserialize((Map<String, Object>) entry.getValue()));
+        if (section != null) {
+            for (String homeName : section.getKeys(false)) {
+                Object locObj = section.get(homeName);
+                if (locObj instanceof Location) {
+                    homes.put(homeName, (Location) locObj);
+                } else if (section.isConfigurationSection(homeName)) {
+                    homes.put(homeName, Location.deserialize(section.getConfigurationSection(homeName).getValues(false)));
+                }
             }
         }
         return homes;
