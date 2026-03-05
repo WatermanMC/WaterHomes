@@ -82,8 +82,7 @@ public class SetHomeCommand implements CommandExecutor {
         }
 
         playerHomes.put(homeName, player.getLocation());
-        Map<String, org.bukkit.Location> snapshot = new java.util.HashMap<>(playerHomes);
-        homeManager.savePlayerHomes(player.getUniqueId(), snapshot);
+        homeManager.savePlayerHomes(player.getUniqueId(), new java.util.HashMap<>(playerHomes));
 
         String msg = configManager.getMessage("prefix") + configManager.getMessage("home.success");
         player.sendMessage(minimessage.deserialize(msg));

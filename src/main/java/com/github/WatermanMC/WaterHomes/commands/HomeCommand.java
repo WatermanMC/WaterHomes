@@ -85,7 +85,6 @@ public class HomeCommand implements CommandExecutor {
             int delay = configManager.getConfig().getInt("tp-delay.duration");
             String msg = configManager.getMessage("prefix") + configManager.getMessage("home.delay");
             player.sendMessage(minimessage.deserialize(msg));
-            player.sendMessage(minimessage.deserialize(configManager.getMessage("home.delay")));
 
             int taskId = Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 homeManager.getPendingTeleports().remove(player.getUniqueId());

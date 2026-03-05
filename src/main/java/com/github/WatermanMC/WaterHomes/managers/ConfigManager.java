@@ -20,9 +20,11 @@ public class ConfigManager {
     private FileConfiguration config;
     private File configFile;
     private File messagesFile;
+    private HomeManager homeManager;
 
-    public ConfigManager(WaterHomes plugin) {
+    public ConfigManager(WaterHomes plugin, HomeManager homeManager) {
         this.plugin = plugin;
+        this.homeManager = homeManager;
         createFiles();
         reloadConfigs();
     }
@@ -77,6 +79,8 @@ public class ConfigManager {
 
             messages.options().copyDefaults(true);
             config.options().copyDefaults(true);
+
+            homeManager.reloadHomes();
 
             return true;
 

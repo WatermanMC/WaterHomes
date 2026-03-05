@@ -24,7 +24,7 @@ public class WaterHomes extends JavaPlugin {
     }
 
     private void loadManagers() {
-        this.configManager = new ConfigManager(this);
+        this.configManager = new ConfigManager(this, homeManager);
         this.homeManager = new HomeManager(this, configManager);
         configManager.loadConfigs();
     }

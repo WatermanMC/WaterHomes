@@ -1,7 +1,6 @@
 package com.github.WatermanMC.WaterHomes.managers;
 
 import com.github.WatermanMC.WaterHomes.WaterHomes;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,10 +23,18 @@ public class HomeManager {
     private final Map<UUID, Long> cooldowns = new ConcurrentHashMap<>();
     private final Map<UUID, Integer> pendingTeleports = new ConcurrentHashMap<>();
 
+    private final Object fileLock = new Object();
+
     public HomeManager(WaterHomes plugin, ConfigManager configManager) {
         this.plugin = plugin;
         this.configManager = configManager;
         setupHomesFile();
+    }
+
+    public void reloadHomes() {
+        synchronized (fileLock) {
+            homesConfig = YamlConfiguration.loadConfiguration(homesFile);
+        }
     }
 
     private void setupHomesFile() {
@@ -76,26 +83,30 @@ public class HomeManager {
     }
 
     public void savePlayerHomes(@NotNull UUID playerId, @NotNull Map<String, Location> homes) {
-        Map<String, Object> serializedHomes = new HashMap<>();
-        for (Map.Entry<String, Location> entry : homes.entrySet()) {
-            serializedHomes.put(entry.getKey(), entry.getValue().serialize());
-        }
-        homesConfig.set(playerId.toString(), serializedHomes);
+        synchronized (fileLock) {
+            String path = playerId.toString();
+            homesConfig.set(path, null);
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, (this::saveHomes));
+            for (Map.Entry<String, Location> entry : homes.entrySet()) {
+                homesConfig.set(path + "." + entry.getKey(), entry.getValue());
+            }
+
+            saveHomes();
+            reloadHomes();
+        }
     }
 
     public boolean deleteHome(@NotNull UUID playerId, @NotNull String homeName) {
-        Map<String, Location> playerHomes = getPlayerHomes(playerId);
+        synchronized (fileLock) {
+            Map<String, Location> playerHomes = getPlayerHomes(playerId);
 
-        if (playerHomes.containsKey(homeName)) {
-            playerHomes.remove(homeName);
-            Map<String, Location> snapshot = new HashMap<>(playerHomes);
-            savePlayerHomes(playerId, snapshot);
-            return true;
+            if (playerHomes.containsKey(homeName)) {
+                playerHomes.remove(homeName);
+                savePlayerHomes(playerId, playerHomes);
+                return true;
+            }
+            return false;
         }
-
-        return false;
     }
 
     public int getHomeLimit(@NotNull Player player) {
