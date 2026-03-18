@@ -10,17 +10,26 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-public class HomeCommand implements CommandExecutor {
+public class HomeCommand implements CommandExecutor, Listener {
 
     private final WaterHomes plugin;
     private final HomeManager homeManager;
     private final ConfigManager configManager;
     private MiniMessage minimessage;
+    private final Map<UUID, Location> teleportLocation = new HashMap<>();
 
     public HomeCommand(WaterHomes plugin,
                        HomeManager homeManager,
@@ -87,10 +96,9 @@ public class HomeCommand implements CommandExecutor {
             player.sendMessage(minimessage.deserialize(msg));
 
             int taskId = Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                homeManager.getPendingTeleports().remove(player.getUniqueId());
-                player.teleport(home);
-                String msg2 = configManager.getMessage("prefix") + configManager.getMessage("home.success");
-                player.sendMessage(minimessage.deserialize(msg2));
+                homeManager.getTeleportTasks().remove(player.getUniqueId());
+
+                performTeleport(player, home);
 
                 if (!player.hasPermission("waterhomes.cooldown.bypass") && configManager.getConfig().getBoolean("tp-cooldown.enabled")) {
                     homeManager.getCooldowns().put(player.getUniqueId(), System.currentTimeMillis());
@@ -99,7 +107,7 @@ public class HomeCommand implements CommandExecutor {
 
             homeManager.getPendingTeleports().put(player.getUniqueId(), taskId);
         } else {
-            player.teleport(home);
+            player.teleportAsync(home);
             String msg = configManager.getMessage("prefix") + configManager.getMessage("home.success");
             player.sendMessage(minimessage.deserialize(msg));
 
@@ -108,5 +116,68 @@ public class HomeCommand implements CommandExecutor {
             }
         }
         return true;
+    }
+
+    private void performTeleport(Player player, Location home) {
+        player.teleportAsync(home);
+        String msg = configManager.getMessage("prefix") + configManager.getMessage("home.success");
+        player.sendMessage(minimessage.deserialize(msg));
+    }
+
+    private void cancelTeleport(Player player, String reason) {
+        if (homeManager.getTeleportTasks().containsKey(player.getUniqueId())) {
+            homeManager.getTeleportTasks().get(player.getUniqueId()).cancel();
+            homeManager.getTeleportTasks().remove(player.getUniqueId());
+            homeManager.getTeleportTasks().remove(player.getUniqueId());
+            String msg = configManager.getMessage("prefix") + configManager.getMessage(reason);
+            player.sendMessage(minimessage.deserialize(msg));
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+
+        if (player.hasPermission("waterhomes.tpdelay.bypass")) {
+            return;
+        }
+
+        if (configManager.getConfig().getBoolean("tp-delay.cancel-on-move")) {
+            if (teleportLocation.containsKey(player.getUniqueId())) {
+                Location from = event.getFrom();
+                Location to = event.getTo();
+                if (event.hasChangedPosition()) {
+                    cancelTeleport(player, configManager.getMessage("home.failed.delaymoved"));
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+        Player player = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
+
+        if (player.hasPermission("waterhomes.tpdelay.bypass")) {
+            return;
+        }
+
+        if (configManager.getConfig().getBoolean("tp-delay.cancel-on-move")) {
+            if (event.getEntity() instanceof Player) {
+                if (teleportLocation.containsKey(player.getUniqueId())) {
+                    cancelTeleport(player, configManager.getMessage("home.failed.delaymoved"));
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        if (homeManager.getTeleportTasks().containsKey(uuid)) {
+            homeManager.getTeleportTasks().get(uuid).cancel();
+            homeManager.getTeleportTasks().remove(uuid);
+        }
+        teleportLocation.remove(uuid);
     }
 }

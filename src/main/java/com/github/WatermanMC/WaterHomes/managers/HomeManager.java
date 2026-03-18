@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -21,6 +22,7 @@ public class HomeManager {
     private File homesFile;
     private YamlConfiguration homesConfig;
     private final Map<UUID, Long> cooldowns = new ConcurrentHashMap<>();
+    private final Map<UUID, BukkitRunnable> teleportTasks = new HashMap<>();
     private final Map<UUID, Integer> pendingTeleports = new ConcurrentHashMap<>();
 
     private final Object fileLock = new Object();
@@ -182,5 +184,9 @@ public class HomeManager {
 
     public Map<UUID, Integer> getPendingTeleports() {
         return pendingTeleports;
+    }
+
+    public Map<UUID, BukkitRunnable> getTeleportTasks() {
+        return teleportTasks;
     }
 }
