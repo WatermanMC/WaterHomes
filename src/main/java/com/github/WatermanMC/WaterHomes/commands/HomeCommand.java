@@ -94,17 +94,20 @@ public class HomeCommand implements CommandExecutor, Listener {
             String msg = configManager.getMessage("prefix") + configManager.getMessage("home.delay");
             player.sendMessage(minimessage.deserialize(msg));
 
-            int taskId = Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            teleportLocation.put(player.getUniqueId(), player.getLocation());
+
+            org.bukkit.scheduler.BukkitTask task = Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 homeManager.getTeleportTasks().remove(player.getUniqueId());
+                teleportLocation.remove(player.getUniqueId());
 
                 performTeleport(player, home);
 
                 if (!player.hasPermission("waterhomes.cooldown.bypass") && configManager.getConfig().getBoolean("tp-cooldown.enabled")) {
                     homeManager.getCooldowns().put(player.getUniqueId(), System.currentTimeMillis());
                 }
-            }, delay * 20L).getTaskId();
+            }, delay * 20L);
 
-            homeManager.getPendingTeleports().put(player.getUniqueId(), taskId);
+            homeManager.getTeleportTasks().put(player.getUniqueId(), task);
         } else {
             player.teleportAsync(home);
             String msg = configManager.getMessage("prefix") + configManager.getMessage("home.success");
@@ -123,12 +126,13 @@ public class HomeCommand implements CommandExecutor, Listener {
         player.sendMessage(minimessage.deserialize(msg));
     }
 
-    private void cancelTeleport(Player player, String reason) {
-        if (homeManager.getTeleportTasks().containsKey(player.getUniqueId())) {
-            homeManager.getTeleportTasks().get(player.getUniqueId()).cancel();
-            homeManager.getTeleportTasks().remove(player.getUniqueId());
-            homeManager.getTeleportTasks().remove(player.getUniqueId());
-            String msg = configManager.getMessage("prefix") + configManager.getMessage(reason);
+    private void cancelTeleport(Player player, String reasonKey) {
+        UUID uuid = player.getUniqueId();
+        if (homeManager.getTeleportTasks().containsKey(uuid)) {
+            homeManager.getTeleportTasks().get(uuid).cancel();
+            homeManager.getTeleportTasks().remove(uuid);
+            teleportLocation.remove(uuid);
+            String msg = configManager.getMessage("prefix") + configManager.getMessage(reasonKey);
             player.sendMessage(minimessage.deserialize(msg));
         }
     }
@@ -137,35 +141,24 @@ public class HomeCommand implements CommandExecutor, Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission("waterhomes.tpdelay.bypass")) {
-            return;
-        }
+        if (!teleportLocation.containsKey(player.getUniqueId())) return;
 
         if (configManager.getConfig().getBoolean("tp-delay.cancel-on-move")) {
-            if (teleportLocation.containsKey(player.getUniqueId())) {
-                Location from = event.getFrom();
-                Location to = event.getTo();
-                if (event.hasChangedPosition()) {
-                    cancelTeleport(player, configManager.getMessage("home.failed.delaymoved"));
-                }
+            if (event.hasChangedBlock()) {
+                cancelTeleport(player, "home.failed.delaymoved");
             }
         }
     }
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
-        Player player = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
+        if (!(event.getEntity() instanceof Player player)) return;
 
-        if (player.hasPermission("waterhomes.tpdelay.bypass")) {
-            return;
-        }
+        UUID uuid = player.getUniqueId();
+        if (!teleportLocation.containsKey(uuid)) return;
 
-        if (configManager.getConfig().getBoolean("tp-delay.cancel-on-move")) {
-            if (event.getEntity() instanceof Player) {
-                if (teleportLocation.containsKey(player.getUniqueId())) {
-                    cancelTeleport(player, configManager.getMessage("home.failed.delaymoved"));
-                }
-            }
+        if (configManager.getConfig().getBoolean("tp-delay.cancel-on-damage", true)) {
+            cancelTeleport(player, "home.failed.delaymoved");
         }
     }
 
