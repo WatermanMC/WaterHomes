@@ -143,10 +143,10 @@ public class HomeCommand implements CommandExecutor, Listener {
 
         if (!teleportLocation.containsKey(player.getUniqueId())) return;
 
-        if (configManager.getConfig().getBoolean("tp-delay.cancel-on-move")) {
-            if (event.hasChangedBlock()) {
-                cancelTeleport(player, "home.failed.delaymoved");
-            }
+        if (!player.hasPermission("waterhomes.tpdelay.bypass") &&
+                configManager.getConfig().getBoolean("tp-delay.enabled") &&
+                configManager.getConfig().getBoolean("tp-delay.cancel-on-move")) {
+            cancelTeleport(player, "home.failed.delaymoved");
         }
     }
 
@@ -157,7 +157,9 @@ public class HomeCommand implements CommandExecutor, Listener {
         UUID uuid = player.getUniqueId();
         if (!teleportLocation.containsKey(uuid)) return;
 
-        if (configManager.getConfig().getBoolean("tp-delay.cancel-on-damage", true)) {
+        if (!player.hasPermission("waterhomes.tpdelay.bypass") &&
+                configManager.getConfig().getBoolean("tp-delay.enabled") &&
+                configManager.getConfig().getBoolean("tp-delay.cancel-on-move")) {
             cancelTeleport(player, "home.failed.delaymoved");
         }
     }
