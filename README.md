@@ -6,7 +6,7 @@
 
 ## Key Features & Why You Should Download It
 
-* **Essential Home Functionality:** Quickly set your personal spawn location anywhere in the world. No complex features—just simple, reliable `/home` functionality.
+* **Essential Home Functionality:** Quickly set your personal spawn location anywhere in the world. No complex features, just simple, reliable `/home` functionality.
 * **Minimal Overhead:** Built to be lightweight and efficient, ensuring minimal impact on your server's performance. Perfect for small to medium-sized survival, semi-vanilla, or even large public servers that just need a core home feature.
 * **Extra Features:** Extra features like to ban a word if a player is setting a home or unsafe blocks so players cannot set a home near a blacklisted block! View it at your `config.yml`!
 * **Customize Plugin Messages:** Customize all WaterHomes messages completely on `messages.yml`! Uses MiniMessage so you can have gradients, hex, clickable text and more! No more ugly § color codes! MiniMessage formatter: [https://webui.advntr.dev/](https://webui.advntr.dev/)
@@ -137,14 +137,8 @@ homelist: "<yellow>Your homes<gray>: <reset>%homes%"
 
 ## Links & Additional Information
 
-**Author:** WatermanMC & Runkang10
+**Author:** WatermanMC
 
 * **GitHub Repository** (Source Code & Full Documentation): [https://github.com/WatermanMC/WaterHomes](https://github.com/WatermanMC/WaterHomes)
 * **Documentation:** [https://github.com/WatermanMC/WaterHomes/wiki](https://github.com/WatermanMC/WaterHomes/wiki)
 * **Discord Support:** [https://discord.gg/Scgqfm5EU4](https://discord.gg/Scgqfm5EU4)
-
----
-
-This plugin is also owned by **VOXELWARE STUDIOS**.
-
----
